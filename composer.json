@@ -51,6 +51,15 @@
             }
         }
     },
+    "config": {
+        "policy": {
+            "advisories": {
+                "ignore-id": {
+                    "PKSA-y2cr-5h3j-g3ys": "firebase/php-jwt 6.x is required by the kreait/firebase-php fork"
+                }
+            }
+        }
+    },
     "scripts": {
         "cs": [
             "vendor/bin/pint"

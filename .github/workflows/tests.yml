@@ -45,6 +45,9 @@ jobs:
           coverage: xdebug
 
       - name: Install dependencies
+        env:
+          # Resolving the VCS repositories (the firebase-php fork) calls the GitHub API; unauthenticated calls hit the rate limit.
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
         run: |
           composer require -W "illuminate/contracts:^${{ matrix.laravel }}.0"
           composer require -W --dev orchestra/testbench
