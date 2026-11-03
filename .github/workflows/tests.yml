@@ -26,17 +26,12 @@ jobs:
     strategy:
       matrix:
         php:
-          - "8.1"
-          - "8.2"
           - "8.3"
           - "8.4"
         laravel:
-          - "9"
-          - "10"
           - "11"
-        exclude:
-          - php: "8.1"
-            laravel: "11"
+          - "12"
+          - "13"
 
     steps:
       - name: Checkout code
@@ -50,6 +45,9 @@ jobs:
           coverage: xdebug
 
       - name: Install dependencies
+        env:
+          # Resolving the VCS repositories (the firebase-php fork) calls the GitHub API; unauthenticated calls hit the rate limit.
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
         run: |
           composer require -W "illuminate/contracts:^${{ matrix.laravel }}.0"
           composer require -W --dev orchestra/testbench
